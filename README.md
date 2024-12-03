@@ -16,6 +16,16 @@
 
 DoodleView is an intuitive Android application designed for creative minds who want to express their ideas through drawing. With customizable brush size, color, and opacity settings, it provides an engaging and interactive way to sketch and doodle.
 
+<!-- INSTALLATION -->
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/ArunReddyVittedi/DoodleView.git
+2.Open the project in Android Studio.
+
+3.Build and run the app on an emulator or device.
+
 <!-- FEATURES -->
 ## Features
 
@@ -28,19 +38,17 @@ DoodleView is an intuitive Android application designed for creative minds who w
 - **User-Friendly Tool Panel**: Easily access all customization options.
 
 
-<!-- INSTALLATION -->
-## Installation
+## References
+The following resources were instrumental in developing this project:
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/ArunReddyVittedi/DoodleView.git
-2.Open the project in Android Studio.
+Android Canvas and Paint
 
-3.Build and run the app on an emulator or device.
+Custom Views in Android
 
-## License
+Color Picker Dialog: Stack Overflow 
 
-This project is licensed under the MIT License.
+Android Developer Documentation
+
 
 ## Contact
 Arun Reddy Vittedi
