@@ -5,7 +5,7 @@
   <p align="center">
     A simple yet powerful Android drawing app with customization options for brush size, color, and opacity.
     <br />
-    <a href="https://github.com/ArunReddyVittedi/DoodleView"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/ArunReddyVittedi/Doodleapp.git"><strong>Explore the docs »</strong></a>
     <br />
     <br />
   </p>
@@ -21,7 +21,7 @@ DoodleView is an intuitive Android application designed for creative minds who w
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/ArunReddyVittedi/DoodleView.git
+   git clone https://github.com/ArunReddyVittedi/Doodleapp.git
 2.Open the project in Android Studio.
 
 3.Build and run the app on an emulator or device.
