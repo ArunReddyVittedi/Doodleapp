@@ -3,11 +3,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- Tool Panel -->
+    <!-- Tool Panel: First Line with 3 Buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_horizontal">
 
         <Button
             android:id="@+id/clearButton"
@@ -26,17 +28,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Color Picker" />
+    </LinearLayout>
+
+    <!-- Tool Panel: Second Line with Remaining 2 Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_horizontal">
 
         <Button
             android:id="@+id/opacityButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Opacity" />
+
+        <Button
+            android:id="@+id/undoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Undo" />
+
+        <Button
+            android:id="@+id/redoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Redo" />
     </LinearLayout>
 
     <!-- Doodle Canvas -->
     <com.example.doodleapp11.DoodleView
         android:id="@+id/doodleView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FFFFFF" />
 </LinearLayout>

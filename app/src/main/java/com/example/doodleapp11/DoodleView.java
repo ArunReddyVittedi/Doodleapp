@@ -2,6 +2,7 @@ package com.example.doodleapp11;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
@@ -9,13 +10,18 @@ import android.view.MotionEvent;
 import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class DoodleView extends View {
     private Paint paint;
     private Path path;
     private List<Path> paths;
     private List<Paint> paints;
-    private int currentOpacity = 255; // Default full opacity
+    private Stack<Path> undoStack;
+    private Stack<Paint> undoPaintStack;
+    private Stack<Path> redoStack;
+    private Stack<Paint> redoPaintStack;
+    private int currentOpacity = 255;
 
     public DoodleView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -24,17 +30,21 @@ public class DoodleView extends View {
 
     private void init() {
         paint = new Paint();
-        paint.setColor(0xFF000000); // Default black
+        paint.setColor(0xFF000000); // Default color black
         paint.setStrokeWidth(10); // Default brush size
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setAntiAlias(true);
-        paint.setAlpha(currentOpacity); // Set initial opacity
+        paint.setAlpha(currentOpacity);
 
         path = new Path();
         paths = new ArrayList<>();
         paints = new ArrayList<>();
+        undoStack = new Stack<>();
+        undoPaintStack = new Stack<>();
+        redoStack = new Stack<>();
+        redoPaintStack = new Stack<>();
     }
 
     @Override
@@ -42,7 +52,7 @@ public class DoodleView extends View {
         for (int i = 0; i < paths.size(); i++) {
             canvas.drawPath(paths.get(i), paints.get(i));
         }
-        canvas.drawPath(path, paint); // Draw the current path
+        canvas.drawPath(path, paint);
     }
 
     @Override
@@ -63,41 +73,68 @@ public class DoodleView extends View {
 
             case MotionEvent.ACTION_UP:
                 paths.add(path);
-                Paint newPaint = new Paint(paint); // Clone current paint
-                paints.add(newPaint);
-                path = new Path(); // Start a new path
+                paints.add(new Paint(paint)); // Clone current paint
+                undoStack.push(path);
+                undoPaintStack.push(new Paint(paint));
+
+                redoStack.clear();
+                redoPaintStack.clear();
+                path = new Path();
                 invalidate();
                 break;
         }
         return true;
     }
 
-    // Clear the canvas
     public void clearCanvas() {
         paths.clear();
         paints.clear();
+        undoStack.clear();
+        undoPaintStack.clear();
+        redoStack.clear();
+        redoPaintStack.clear();
         path.reset();
         invalidate();
     }
 
-    // Set brush size
     public void setBrushSize(float size) {
         paint.setStrokeWidth(size);
     }
 
-    // Set brush color
     public void setBrushColor(int color) {
         paint.setColor(color);
     }
 
-    // Set brush opacity
     public void setBrushOpacity(int alpha) {
         currentOpacity = alpha;
         paint.setAlpha(alpha);
     }
 
-    // Get current opacity
     public int getBrushOpacity() {
         return currentOpacity;
+    }
+
+    public void undo() {
+        if (!paths.isEmpty()) {
+            Path undonePath = paths.remove(paths.size() - 1);
+            Paint undonePaint = paints.remove(paints.size() - 1);
+
+            redoStack.push(undonePath);
+            redoPaintStack.push(undonePaint);
+
+            invalidate();
+        }
+    }
+
+    public void redo() {
+        if (!redoStack.isEmpty()) {
+            Path redonePath = redoStack.pop();
+            Paint redonePaint = redoPaintStack.pop();
+
+            paths.add(redonePath);
+            paints.add(redonePaint);
+
+            invalidate();
+        }
     }
 }

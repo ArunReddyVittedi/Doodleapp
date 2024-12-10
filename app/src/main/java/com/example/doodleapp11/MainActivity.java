@@ -1,12 +1,12 @@
 package com.example.doodleapp11;
 
-import android.app.AlertDialog;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 
 public class MainActivity extends AppCompatActivity {
     private DoodleView doodleView;
@@ -33,6 +33,14 @@ public class MainActivity extends AppCompatActivity {
         // Opacity Button
         Button opacityButton = findViewById(R.id.opacityButton);
         opacityButton.setOnClickListener(view -> showOpacityDialog());
+
+        // Undo Button
+        Button undoButton = findViewById(R.id.undoButton);
+        undoButton.setOnClickListener(view -> doodleView.undo());
+
+        // Redo Button
+        Button redoButton = findViewById(R.id.redoButton);
+        redoButton.setOnClickListener(view -> doodleView.redo());
     }
 
     // Show dialog to choose brush size
@@ -67,16 +75,16 @@ public class MainActivity extends AppCompatActivity {
         builder.setItems(colors, (dialog, which) -> {
             switch (which) {
                 case 0:
-                    doodleView.setBrushColor(Color.RED);
+                    doodleView.setBrushColor(getResources().getColor(android.R.color.holo_red_light));
                     break;
                 case 1:
-                    doodleView.setBrushColor(Color.BLUE);
+                    doodleView.setBrushColor(getResources().getColor(android.R.color.holo_blue_light));
                     break;
                 case 2:
-                    doodleView.setBrushColor(Color.GREEN);
+                    doodleView.setBrushColor(getResources().getColor(android.R.color.holo_green_light));
                     break;
                 case 3:
-                    doodleView.setBrushColor(Color.BLACK);
+                    doodleView.setBrushColor(getResources().getColor(android.R.color.black));
                     break;
             }
         });
@@ -90,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle("Adjust Opacity");
 
         SeekBar opacitySeekBar = new SeekBar(this);
-        opacitySeekBar.setMax(255); // Max alpha value
-        opacitySeekBar.setProgress(doodleView.getBrushOpacity()); // Set current opacity
+        opacitySeekBar.setMax(255);
+        opacitySeekBar.setProgress(doodleView.getBrushOpacity());
 
         builder.setView(opacitySeekBar);
         builder.setPositiveButton("OK", (dialog, which) -> {
